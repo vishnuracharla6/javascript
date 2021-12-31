@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  :root {
+  --modal-duration: 1s;
+  --modal-color: #428bca;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.247);
+}
+
+.modal-content {
+  margin: 10% auto;
+  width: 60%;
+  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.17);
+  animation-name: modalopen;
+  animation-duration: var(--modal-duration);
+}
+.modal-header h2,
+.modal-footer h3 {
+  margin: 0;
+}
+.modal-header {
+  background: var(--modal-color);
+  padding: 15px;
+  color: #fff;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.modal-body {
+  padding: 10px 20px;
+  background: #fff;
+}
+.close {
+  color: #ccc;
+  float: right;
+  font-size: 30px;
+  color: #fff;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+@keyframes modalopen {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+#div1{
+width :290px;
+height:700px;
+border-right-style: solid;
+}
+#div2{
+position:absolute;
+  left: 320px;
+  top: 0px;
+}
+.searchbox{
+
+  background-position: 10px 12px;
+  background-repeat: no-repeat;
+  width: 75%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+h1
+{
+text-align:center;
+}
+th,td {
+  padding :20px;
+}
+#m
+{
+position:relative;
+left: 250px;
+  }
+.table{
+width:280px;
+height:200px;
+border-bottom-style: solid;
+}
+.itembox-style{
+  border-bottom: 1px solid rgba(31, 3, 3, 0.897);
+  margin-top: -1px; /* Prevent double borders */
+  background-color: #f6f6f6;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  color: black;
+  display: block;
+  width:100%;
+}
+</style>
+</head>
+<body>
+<div id="div1">
+<h1>Tables</h1>
+<input type="text" class="searchbox" id="searchtable" onkeyup="myFunction1()" placeholder="Search Table" title="Enter Table Name to Search">
+
+  <div id="table">
+    
+  </div>
+</div>
+<div id="div2">
+<h1 id="m">Menu</h1>
+<input type="text" style="width:500px" class="searchbox" id="searchitems" onkeyup="myFunction()" placeholder="Search items" title="Enter menu">
+<div id="menu">
+  
+</div>
+  </div>
+  <div id="my-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close">&times;</span>
+        <h2 id="header"></h2>
+      </div>
+      <div class="modal-body">
+        <table id="mb"><tr><th>S.NO</th><th>name</th><th>price</th><th>servings</th><th>delete-item</th></tr></table>
+        <p>table list </p>
+      </div>
+      <div class="modal-footer">
+        <h3>Modal Footer</h3>
+      </div>
+    </div>
+  </div>
+<script>
+  
+const items=[["veg Biryani",100],["chicken Biryani",200],["egg fried rice",75]];
+ for(var i=0;i<items.length;i++)
+ {
+  var div= document.createElement("div");
+  div.className = "itembox-style";
+  var h2 = document.createElement("h2");
+  var br = document.createElement("br");
+  var par =document.createElement("p");
+  var t = document.createTextNode(items[i][0]);
+  var p = document.createTextNode(items[i][1]);
+  h2.appendChild(t);
+  par.appendChild(p);
+  div.appendChild(h2);
+  div.appendChild(par);
+  document.getElementById("menu").appendChild(div);
+  document.getElementById("menu").appendChild(br);
+ }
+ function myFunction() {
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById("searchitems");
+    filter = input.value.toUpperCase();
+    ul = document.getElementsByClassName("itembox-style");
+  
+    for (i = 0; i < ul.length; i++) {
+        a = ul[i].getElementsByTagName("h2")[0];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            ul[i].style.display = "";
+        } else {
+            ul[i].style.display = "none";
+        }
+    }
+}
+const tables =[{name:"Table-1",item:[{name:"biryani",price:50},{name:"biryani",price:50}],total:1},{name:"Table-2",item:[],total:0},{name:"Table-3",item:[],total:0}];
+for(var i=0;i<tables.length;i++)
+ {
+  var div= document.createElement("div");
+  div.className = "tablebox-style";
+  div.id=i;
+  var h2 = document.createElement("h2");
+  var br = document.createElement("br");
+  var par =document.createElement("p");
+  var t = document.createTextNode(tables[i]["name"]);
+  var p = document.createTextNode("Rs :"+tables[i]["total"]+"| TotalItems :"+tables[i]["total"]);
+  h2.appendChild(t);
+  par.appendChild(p);
+  div.appendChild(h2);
+  div.appendChild(par);
+  document.getElementById("table").appendChild(div);
+  document.getElementById("table").appendChild(br);
+  
+  document.getElementById(i).setAttribute('onclick','openModal(this.id)');
+ }
+  function myFunction1() {
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById("searchtable");
+    filter = input.value.toUpperCase();
+    ul = document.getElementsByClassName("tablebox-style");
+  
+    for (i = 0; i < ul.length; i++) {
+        a = ul[i].getElementsByTagName("h2")[0];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            ul[i].style.display = "";
+        } else {
+            ul[i].style.display = "none";
+        }
+    }
+}
+
+//tables[0].items.push(["biryani",50]);
+//document.getElementById("demo").innerHTML =tables[0]["items"];
+const modal = document.querySelector('#my-modal');
+//const modalBtn = document.querySelector('.itembox-style');
+const closeBtn = document.querySelector('.close');
+
+// Events
+//modalBtn.addEventListener('click', openModal);
+closeBtn.addEventListener('click', closeModal);
+window.addEventListener('click', outsideClick);
+
+// Open
+function openModal(j) {
+  console.log(j);
+  var j=Number(j);
+ 
+  modal.style.display = 'block';
+  var mb=document.getElementById(mb);
+
+  document.getElementById("header").innerHTML = "Table "+(j+1)+" |Order details";
+
+  var h = document.getElementById("mb");
+  for(var i =0;i<tables[j]['item'].length;i++)
+  { 
+    //const fruits = [{name:"biryani",price:50,items:[{name:"biryani",price:50}]}];
+    //document.getElementById("demo").innerHTML = fruits[0]['items'][0]['name'];
+    var tr= document.createElement("tr");
+    var td1= document.createElement("td");
+    var td2= document.createElement("td");
+    var td3= document.createElement("td");
+    var td4= document.createElement("td");
+    var t1 = document.createTextNode(i+1);
+    var t2 = document.createTextNode(tables[j]['item'][i]['name']);
+    var t3= document.createTextNode(tables[j]['item'][0]['']);
+    h2.appendChild(t);
+    td1.appendChild(t1);
+    td2.appendChild(t2);
+    td3.appendChild(t3);
+    tr.appendChild(td1);
+    tr.appendChild(td2);
+    tr.appendChild(td3);
+    document.getElementById("mb").appendChild(tr);
+    
+
+}
+  
+}
+// Close
+function closeModal() {
+  modal.style.display = 'none';
+}
+
+// Close If Outside Click
+function outsideClick(e) {
+  if (e.target == modal) {
+    modal.style.display = 'none';
+  }
+}
+</script>
+</body>
+</html>

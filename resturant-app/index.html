@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+    <title>Restaurant App</title>
+</head>
+<body>
+  <div id="div1">
+    <h1>Tables</h1>
+    <input type="text" class="searchbox" id="searchtable" onkeyup="myFunction1()" placeholder="Search Table" title="Enter Table Name to Search">
+    
+      <div id="table">
+        
+      </div>
+    </div>
+    <div id="div2">
+    <h1 id="m">Menu</h1>
+    <input type="text" style="width:500px" class="searchbox" id="searchitems" onkeyup="myFunction()" placeholder="Search items" title="Enter menu">
+    <div id="menu">
+      
+    </div>
+      </div>
+      <div id="my-modal" class="modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <span class="close">&times;</span>
+            <h2 id="header"></h2>
+          </div>
+          <div class="modal-body">
+            <table id="mb"></table>
+            <strong id="final"> </strong>
+          </div>
+          
+        </div>
+      </div>
+  <script src="script.js"></script>
+</body>
+</html>

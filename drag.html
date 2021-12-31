@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<style>
+.droptarget {
+  float: left; 
+  width: 100px; 
+  height: 35px;
+  margin: 15px;
+  padding: 10px;
+  border: 1px solid #aaaaaa;
+}
+</style>
+</head>
+<body>
+<div id="source" class="droptarget">
+  <!--<p draggable="true" id="dragtarget">Drag me!</p> -->
+</div>
+
+<div class="droptarget"></div>
+
+<p id="demo"></p>
+<p id="demo1"></p>
+
+<script>
+  const item={
+  name:"biryani",
+  price:80
+  };
+var par =document.createElement("p");
+  var t = document.createTextNode(item);
+  par.appendChild(t);
+  par.setAttribute("draggable", "true");
+  par.setAttribute('id','dragtarget'); 
+    document.getElementById("source").appendChild(par);
+
+/* Events fired on the drag target */
+document.addEventListener("dragstart", function(event) {
+  event.dataTransfer.setData("Text", event.target.id);
+
+  
+});
+
+document.addEventListener("drag", function(event) {
+  document.getElementById("demo").innerHTML = "The p element is being dragged";
+});
+
+/* Events fired on the drop target */
+document.addEventListener("dragover", function(event) {
+  event.preventDefault();
+});
+
+document.addEventListener("drop", function(event) {
+  event.preventDefault();
+  if ( event.target.className == "droptarget" ) {
+    var data = event.dataTransfer.getData("Text");
+   
+    event.target.appendChild(document.getElementById(data));
+     
+  }
+});
+</script>
+
+</body>
+</html>

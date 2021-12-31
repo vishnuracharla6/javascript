@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<head> <title> STORAGE </title>
+
+</head>
+
+<body>
+    <h2>Local Storage</h2>
+    <h3 id="localCount"></h3>
+    <button onclick="localStorageCount()">Increment</button>
+    <p>Local score : <b id="local"></b> </p>
+    
+    <br>
+    <h2>Session Storage</h2>
+    <h3 id="sessionCount"></h3>
+    <button onclick="sessionStorageCount()">Increment</button>
+    <p>Session score : <b id="session"></b>  </p>
+    <script>
+        var count1=localStorage.getItem('localScore');
+         var count2= sessionStorage.getItem('sessionScore');
+        console.log(count1+' '+count2)
+         document.getElementById('local').innerHTML= count1 === null ? 0 : count1; 
+        document.getElementById('session').innerHTML= count2 === null ? 0 :count2;
+        function localStorageCount(){
+    let count = localStorage.getItem('localScore');
+    if(count === null ) {
+        count = 0;
+    }
+      localStorage.setItem('localScore',Number(count)+1);
+      document.getElementById('local').innerHTML=localStorage.getItem('localScore');
+}
+
+sessionStorageCount = () => {
+    let count = sessionStorage.getItem('sessionScore');
+    if(count === null ) {
+       count = 0;
+    }
+      sessionStorage.setItem('sessionScore',Number(count)+1);
+      document.getElementById('session').innerHTML=sessionStorage.getItem('sessionScore');
+}
+    </script>
+</body>
+
+</html>
